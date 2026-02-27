@@ -25,7 +25,7 @@ function pcmToWav(pcmData, sampleRate) {
 }
 
 // --- WHISPER TTS CALL ---
-async function playWhisper() {
+async function //playWhisper() {
     try {
         const response = await fetch(`https://shikokure.vercel.app/api/shikoku`, {
             method: 'POST',
@@ -507,6 +507,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
 
 
 
