@@ -52,7 +52,7 @@ async function fetchShikokuResponse(userMessage) {
     let delay = 1000;
     for (let i = 0; i < retries; i++) {
         try {
-            const response = await fetch(`shikoku-r.vercel.app/api/shikoku`, {
+            const response = await fetch(`https://shikoku-r.vercel.app/api/shikoku`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: 'chat', text: userMessage })
@@ -507,3 +507,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
