@@ -27,7 +27,7 @@ function pcmToWav(pcmData, sampleRate) {
 // --- WHISPER TTS CALL ---
 async function playWhisper() {
     try {
-        const response = await fetch(`https://shikoku-r.vercel.app/api/shikoku`, {
+        const response = await fetch(`https://shikokure.vercel.app/api/shikoku`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'tts' })
@@ -52,7 +52,7 @@ async function fetchShikokuResponse(userMessage) {
     let delay = 1000;
     for (let i = 0; i < retries; i++) {
         try {
-            const response = await fetch(`https://shikoku-r.vercel.app/api/shikoku`, {
+            const response = await fetch(`https://shikokure.vercel.app/api/shikoku`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: 'chat', text: userMessage })
@@ -507,5 +507,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
 
 
