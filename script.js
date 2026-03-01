@@ -24,50 +24,6 @@ function pcmToWav(pcmData, sampleRate) {
     return new Blob([buffer], { type: 'audio/wav' });
 }
 
-// --- WHISPER TTS CALL ---
-async function playWhisper() {
-    try {
-        const response = await fetch(`https://shikokure.vercel.app/api/shikoku`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'tts' })
-        });
-        const result = await response.json();
-        const base64Data = result.audioData;
-        if (base64Data) {
-            const binaryString = atob(base64Data);
-            const pcmData = new Int16Array(binaryString.length / 2);
-            for (let i = 0; i < pcmData.length; i++) {
-                pcmData[i] = (binaryString.charCodeAt(i * 2 + 1) << 8) | binaryString.charCodeAt(i * 2);
-            }
-            const wavBlob = pcmToWav(pcmData, 24000);
-            const audio = new Audio(URL.createObjectURL(wavBlob));
-            audio.play();
-        }
-    } catch (e) { console.error("TTS Failed", e); }
-}
-
-async function fetchShikokuResponse(userMessage) {
-    let retries = 5;
-    let delay = 1000;
-    for (let i = 0; i < retries; i++) {
-        try {
-            const response = await fetch(`https://shikokure.vercel.app/api/shikoku`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'chat', text: userMessage })
-            });
-            if (!response.ok) throw new Error(`API Error: ${response.status}`);
-            const data = await response.json();
-            return data.text || "...";
-        } catch (error) {
-            if (i === retries - 1) throw error;
-            await new Promise(res => setTimeout(res, delay));
-            delay *= 2;
-        }
-    }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -507,6 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
 
 
 
